@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form method="post" action="{%url 'user:register'%}">
+    <form method="post" novalidate>
         {% csrf_token %}
-        {{form.as_p}}
-
-        <button name="submit">Register</button>
-        <input type="hidden" name="next" value="{% url 'document_manager:index' %}"/>
+        <h2>Sign Up</h2>
+        
+        {% for field in form %}
+        <p>
+            {% if field.errors %}
+            <ul class="errorlist">
+                {% for error in field.errors %}
+                <li>{{error}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {{field.label_tag}} {{field}}
+        </p>
+        {% endfor %}
+        <input type="submit" value="Register"/>
+        <p>Already have an account? <a href="{%url 'login' %}">Login Here</a></p>
     </form>
 {% endblock content %}
