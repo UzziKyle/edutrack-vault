@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/authentication.css'%}" />
+    <title>Signup</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sign-Up</h1>
+      <form id="signup-form" action="#">
+        <label for="firstname">First Name:</label>
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          placeholder="First Name"
+          required
+        />
+
+        <label for="lastname">Last Name:</label>
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          placeholder="Last Name"
+          required
+        />
+
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          required
+        />
+
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+
+        <label for="confirm-pass">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm-pass"
+          name="confirm-pass"
+          placeholder="Confirm Password"
+          required
+        />
+
+        <button type="submit">Submit</button>
+      </form>
+      <h4 class="new-student">
+        Already have an account? <a href="{% url 'login' %}">Login here!</a>
+      </h4>
+    </div>
+    {% comment %}
+    <script src="signup.js"></script>
+    {% endcomment %}
+  </body>
+</html>
