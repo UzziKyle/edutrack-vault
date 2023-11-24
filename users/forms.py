@@ -1,7 +1,7 @@
 from django import forms
 # from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, UserProfile
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=65)
@@ -21,3 +21,9 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model=CustomUser
         fields = ['username', 'email', 'user_type', 'password1', 'password2']
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['bio', 'profile_picture']

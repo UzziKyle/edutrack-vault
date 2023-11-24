@@ -13,3 +13,12 @@ class CustomUser(AbstractUser):
 
     groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True, verbose_name=_('groups'))
     user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True, verbose_name=_('user permissions'))
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}\n{self.user.user_type}"
