@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a id='back' href={% url "home" %}>Go back</a>
-<div class='modal-container {% if error %}is_open{% endif %}'>
+<div class='modal-container'>
 <form method="POST" novalidate>
 	{% csrf_token %}
 	{{ form.as_p }}

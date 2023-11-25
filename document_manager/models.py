@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ class Folder(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=False, unique=True)
     date_created = models.DateTimeField(default=timezone.now, blank=False)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     
     class Meta:
@@ -30,7 +31,7 @@ class File(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=160, blank=False, unique=True)
     date_uploaded = models.DateTimeField(default=timezone.now, blank=False)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
     file = models.FileField(upload_to=user_directory_path, blank=False)
     

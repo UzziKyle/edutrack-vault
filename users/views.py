@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from .forms import LoginForm, RegistrationForm
+from django.contrib.auth.decorators import login_required
+from .forms import LoginForm, RegistrationForm, UserProfileForm
+from .models import CustomUser
 
 
 def sign_in(request):
@@ -51,3 +53,42 @@ def sign_up(request):
         
         else:
             return render(request, 'users/register.html', {'form': form})
+
+
+@login_required
+def view_profile(request):
+    context = {}
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    context['user'] = user
+    context['profile'] = profile
+
+    return render(request, 'users/profile.html', context)
+
+
+@login_required   
+def edit_profile(request):
+    context = {}
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    
+    if request.method == 'GET':
+        context['form'] = UserProfileForm(instance=profile)
+        
+        return render(request, 'users/edit_profile.html', context)
+    
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
+            
+            return redirect('profile')
+
+        else:
+            context['form'] = form
+            messages.error(request, 'Please correct the following errors:')
+            return render(request, 'edit_profile.html', context)
+        

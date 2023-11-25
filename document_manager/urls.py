@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import profile_view
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -10,5 +9,4 @@ urlpatterns = [
     path('file/edit/<int:id>/', views.edit_file, name='file-edit'),
     path('file/delete/<int:id>/', views.delete_file, name='file-delete'),
     path('file/download<int:id>', views.download_file, name='file-download'),
-    path('profile/', profile_view, name='profile'),
 ]

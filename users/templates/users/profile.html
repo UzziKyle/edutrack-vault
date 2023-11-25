@@ -13,11 +13,5 @@
 	<p>No profile picture available.</p>
 {% endif %}
 
-<h3>Edit Profile</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-</form>
-
+<a id='edit' href='{% url 'profile-edit' %}'>Edit Profile</a>
 {% endblock content %}

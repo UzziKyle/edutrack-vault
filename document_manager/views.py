@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Folder, File
 from .forms import FolderForm, UploadFileForm, EditFileForm
 
-from users.models import CustomUser
-from users.forms import UserProfileForm
 
 @login_required
 def home(request):
@@ -47,7 +45,7 @@ def edit_folder(request, id):
         context['form'] = FolderForm(instance=folder)
         context['id'] = folder
         
-        return render(request, 'document_manager/home.html', context)
+        return render(request, 'document_manager/edit_folder.html', context)
     
     elif request.method == 'POST':
         form = FolderForm(request.POST, instance=folder)
@@ -60,7 +58,7 @@ def edit_folder(request, id):
         else:
             context['form'] = form
             messages.error(request, 'Please correct the following errors:')
-            return render(request, 'document_manager/home.html', context)
+            return render(request, 'document_manager/edit_folder.html', context)
         
 
 @login_required  
@@ -184,23 +182,4 @@ def download_file(request, id):
     filename = file.file.path
     response = FileResponse(open(filename, 'rb'))
     return response
-
-
-def profile_view(request):
-    user = request.user
-    profile = user.profile if hasattr(user, 'profile') else None
-
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=profile)
-
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = user
-            profile.save()
-        
-    
-    else:
-        form = UserProfileForm(instance=profile)
-
-    return render(request, 'document_manager/profile.html', {'form': form, 'profile': profile})
 
