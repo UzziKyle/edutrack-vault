@@ -25,11 +25,13 @@ def sign_in(request):
             
         messages.error(request, f'Invalid username or password')
         return render(request, 'users/login.html', {'form': form})
+  
     
 def sign_out(request):
     logout(request)
     messages.success(request, f'You have been logged out.')
     return redirect('login')
+
 
 def sign_up(request):
     if request.method == 'GET':
@@ -38,6 +40,7 @@ def sign_up(request):
     
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
@@ -45,5 +48,6 @@ def sign_up(request):
             messages.success(request, 'You have signed up successfully!')
             login(request, user)
             return redirect('home')
+        
         else:
             return render(request, 'users/register.html', {'form': form})
