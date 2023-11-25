@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content%}
+    <!-- profile.html -->
+<h2>{{user.username}}'s Profile</h2>
+<h4>User: {{user.user_type | title}}</h4>
+
+<p>Bio: {{ profile.bio }}</p>
+
+{% if profile.profile_picture %}
+	<img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+{% else %}
+	<p>No profile picture available.</p>
+{% endif %}
+
+<h3>Edit Profile</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+
+{% endblock content %}
