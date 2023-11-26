@@ -5,8 +5,18 @@
 <form method="POST" novalidate>
 	{% csrf_token %}
 	{{ form.as_p }}
-	<input type="submit" value="Save" />
-    <a href='{% url "home" %}'><button>back</a>
+	<div class='btn-container'>
+		<input type="submit" value="Save" />
+		{% if folder.parent %}
+			<a href='{% url "folder-open" folder.parent.id %}'>
+				<button>back</back>
+			</a>
+		{% else %}
+			<a href='{% url "home" %}'>
+				<button>back</button>
+			</a>
+		{% endif %}
+	</div>	
 </form>
 </div>
 {% endblock content %}

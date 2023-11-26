@@ -2,33 +2,25 @@
 
 {% block content%}
 <div class='main-container'>
-    <h2>My Directory</h2>
-    <div class='utility'>
-        <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
-            <option value="" id="placeholder" disabled selected hidden>Sort</option>
-            <option id="name" value="name">AtoZ</option>
-            <option id="-name" value="-name">ZtoA</option>
-            <option id="-date_created" value="-date_created">Newest</option>
-            <option id="date_created" value="date_created">Oldest</option>
-        </select>
-    </div>
-    <button>New Folder</button>
-    {% if folders %}
-        {% for folder in folders  %}
-        <div class='folder'>
-            <a id='open' href='{% url 'folder-open' folder.id %}'> {{ folder.name }} </a>
-            <a id='edit' href='{% url 'folder-edit' folder.id %}'><button name='edit'>Edit</button></a>
-            <a id='delete' href='{% url 'folder-delete' folder.id %}'><button name='delete'>Delete</button></a>
+    <h1>Welcome, {{ user.username | title }}! </h1>
+    <div class="dashboards">
+        <div class="dashboard">
+            <h4>Recent Upload</h4>
+            <ul class="recents">
+                {% if files %}
+                    {% for file in files %}
+                    <li>{{file.folder.name}}/{{ file.name }}</li>
+                    {% endfor %}
+                {% endif %}
         </div>
-        {% endfor %}
-    {% endif %}
+        <div class="dashboard">
+            <h4>Notifications</h4>
+            <ul class="updates">
+                <li>No notifications yet.</li>
+            </ul>
+        </div>
+    </div>
 </div>
-<div class='modal-container'>
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save" />
-    </form>
 {% endblock content %}
 
 {% block js %}

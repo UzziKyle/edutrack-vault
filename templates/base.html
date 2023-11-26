@@ -9,17 +9,36 @@
   <p>
     {% block nav %}
       {% if request.user.is_authenticated %}
-        Hello, {{request.user.username | title}}!
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'profile' %}">My Profile</a>
-        <a href="{% url 'logout' %}">Logout</a>
+      <div class="menu-button menu-open">
+          <i class="fa fa-bars fa-2x"></i>
+      </div>
+      <div class="nav-container">
+          <nav>
+              <div class="menu-button menu-close">
+                  <i class="fa fa-bars fa-2x" style="color: #ffffff;"></i>
+              </div>
+              <ul>
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                  <li><a href="{% url 'profile' %}">Profile</a></li>
+                  <li><a href="{% url 'directory' %}">My Directory</a></li>
+                  <li><a href="#">My Uploads</a></li>
+                  <li><a href="#">My Actions</a></li>
+                  <li><a href="#">Notifications</a></li>
+                  <li><a href="#">Settings</a></li>
+              </ul>
 
+              <a href="{% url 'logout' %}" id="sign-out">
+                  <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i>
+                  Sign Out
+              </a>
+          </nav>
+      </div>
       {% else %}
         <a href="{% url 'login' %}">Log in</a>
         <a href="{% url 'register' %}">Register</a>
       {% endif %}
+    {% endblock nav %}
   </p>
-  {% endblock nav %}
   <main>
     {% if messages %}
     <ul class="messages">

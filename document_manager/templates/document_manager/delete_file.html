@@ -7,7 +7,9 @@
         <p>Are you sure you want to delete "{{ file.name }}"?</p>
         <div class='btn-container'>
             <button type='submit'>Yes</button>
-            <a href='{% url 'folder-open' file.folder.id %}''><button type='button'>No</a>
+            <a href='{% url 'folder-open' file.folder.id %}'>
+                <button type='button'>No</button>
+            </a>
         </div>
     </form>
 </div>

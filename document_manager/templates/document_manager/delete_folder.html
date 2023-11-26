@@ -7,7 +7,15 @@
         <p>Are you sure you want to delete "{{ folder.name }}"?</p>
         <div class='btn-container'>
             <button type='submit'>Yes</button>
-            <a href='{% url "home" %}'><button type='button'>No</a>
+            {% if folder.parent %}
+                <a href='{% url "folder-open" folder.parent.id %}'>
+                    <button>back</back>
+                </a>
+            {% else %}
+                <a href='{% url "home" %}'>
+                    <button>back</button>
+                </a>
+            {% endif %}
         </div>
     </form>
 </div>

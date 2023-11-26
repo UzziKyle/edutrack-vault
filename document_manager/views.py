@@ -3,11 +3,30 @@ from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Folder, File
-from .forms import FolderForm, UploadFileForm, EditFileForm
+from .forms import CreateFolderForm, UploadFileForm, EditFileForm, ShareFileForm
 
 
 @login_required
 def home(request):
+    context = {}
+    
+    try:
+        files = File.objects.filter(owner=request.user).order_by('-date_uploaded')[:5][::-1]
+        files = reversed(files)
+        
+    except:
+        files = None
+        
+    user = request.user
+    
+    context['files'] = files
+    context['user'] = user
+    
+    return render(request, 'document_manager/home.html', context)
+    
+
+@login_required
+def directory(request):
     context = {}
     ordering = request.GET.get('ordering', "")
     folders = Folder.objects.filter(parent=None, owner=request.user)
@@ -16,24 +35,25 @@ def home(request):
         folders = folders.order_by(ordering)
     
     context['folders'] = folders 
-    context['form'] = FolderForm()
+    context['form'] = CreateFolderForm()
+    context['title'] = 'My Directory'
         
     if request.method == 'POST':
-        form = FolderForm(request.POST)
+        form = CreateFolderForm(request.POST)
         
         if form.is_valid():
             folder = form.save(commit=False)
             folder.owner = request.user
             folder.save()
             messages.success(request, f'{folder.name} was created successfully.')
-            redirect('home')
+            redirect('directory')
             
         else:
             context['form'] = form
             messages.error(request, 'Folder name is required')
-            return render(request, 'document_manager/home.html', context)
+            return render(request, 'document_manager/directory.html', context)
 
-    return render(request, 'document_manager/home.html', context)
+    return render(request, 'document_manager/directory.html', context)
 
 
 @login_required   
@@ -42,13 +62,13 @@ def edit_folder(request, id):
     folder = get_object_or_404(Folder, id=id)
     
     if request.method == 'GET':
-        context['form'] = FolderForm(instance=folder)
-        context['id'] = folder
+        context['form'] = CreateFolderForm(instance=folder)
+        context['folder'] = folder
         
         return render(request, 'document_manager/edit_folder.html', context)
     
     elif request.method == 'POST':
-        form = FolderForm(request.POST, instance=folder)
+        form = CreateFolderForm(request.POST, instance=folder)
         
         if form.is_valid():
             form.save()
@@ -93,7 +113,7 @@ def open_folder(request, id):
     context['subfolders'] = subfolders
     context['files'] = files
     context['fileform'] = UploadFileForm()
-    context['folderform'] = FolderForm()
+    context['folderform'] = CreateFolderForm()
     
     if request.method == 'GET':        
         return render(request, 'document_manager/open_folder.html', context)
@@ -108,7 +128,7 @@ def open_folder(request, id):
                 file.folder = folder
                 file.save()
                 messages.success(request, f'{file.name} was uploaded successfully.')
-                redirect(f'folder/open/{folder.id}/')
+                redirect (f'folder/open/{folder.id}/')
 
             else:
                 context['form'] = form
@@ -116,7 +136,8 @@ def open_folder(request, id):
                 return render(request, 'document_manager/open_folder.html', context)
             
         if 'folderform' in request.POST:
-            form = FolderForm(request.POST)
+            form = CreateFolderForm(request.POST)
+            print(form)
         
             if form.is_valid():
                 subfolder = form.save(commit=False)
@@ -134,6 +155,21 @@ def open_folder(request, id):
     return render(request, 'document_manager/open_folder.html', context)
 
 
+@login_required
+def open_shared_to_you(request):
+    context = {}
+    files = request.user.receiver.all()
+    ordering = request.GET.get('ordering', "")
+    
+    if ordering:
+        files = files.order_by(ordering)
+        
+    context['files'] = files
+
+    if request.method == 'GET':        
+        return render(request, 'document_manager/open_shared_files.html', context)
+    
+
 @login_required   
 def edit_file(request, id):
     context = {}
@@ -141,7 +177,7 @@ def edit_file(request, id):
     
     if request.method == 'GET':
         context['form'] = EditFileForm(instance=file)
-        context['id'] = file
+        context['file'] = file
         
         return render(request, 'document_manager/home.html', context)
     
@@ -151,7 +187,7 @@ def edit_file(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, f'{file.name} has been updated successfully!')
-            return redirect('home')
+            return redirect('folder-open', file.folder.id)
         
         else:
             context['form'] = form
@@ -183,3 +219,28 @@ def download_file(request, id):
     response = FileResponse(open(filename, 'rb'))
     return response
 
+
+@login_required   
+def share_file(request, id):
+    context = {}
+    file = get_object_or_404(File, id=id)
+    
+    if request.method == 'GET':
+        context['form'] = ShareFileForm(instance=file)
+        context['file'] = file
+        
+        return render(request, 'document_manager/share_file.html', context)
+    
+    elif request.method == 'POST':
+        form = ShareFileForm(request.POST, instance=file)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'{file.name} has been shared successfully!')
+            return redirect('folder-open', file.folder.id)
+                    
+        else:
+            context['form'] = form
+            messages.error(request, 'Please correct the following errors:')
+            return render(request, 'document_manager/share_file.html', context)
+        
