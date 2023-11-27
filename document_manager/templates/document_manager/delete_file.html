@@ -5,10 +5,10 @@
     <form method='POST'>
         {% csrf_token %}
         <p>Are you sure you want to delete "{{ file.name }}"?</p>
-        <div class='btn-container'>
+        <div class='button-container'>
             <button type='submit'>Yes</button>
             <a href='{% url 'folder-open' file.folder.id %}'>
-                <button type='button'>No</button>
+                No
             </a>
         </div>
     </form>

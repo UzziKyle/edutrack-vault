@@ -5,12 +5,12 @@
 <form method="POST" novalidate>
 	{% csrf_token %}
 	{{ form.as_p }}
-    <div class='button-container'>
-        <input type="submit" value="Save" />
-        <a href="{% url 'folder-open' file.folder.id %}">
-            Back
+	<div class='button-container'>
+		<input type="submit" value="Save" />
+        <a href='{% url "folder-open" file.folder.id %}'>
+            back
         </a>
-    </div>
+	</div>	
 </form>
 </div>
 {% endblock content %}

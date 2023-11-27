@@ -5,15 +5,15 @@
     <form method='POST'>
         {% csrf_token %}
         <p>Are you sure you want to delete "{{ folder.name }}"?</p>
-        <div class='btn-container'>
+        <div class='button-container'>
             <button type='submit'>Yes</button>
             {% if folder.parent %}
                 <a href='{% url "folder-open" folder.parent.id %}'>
-                    <button>back</back>
+                    back
                 </a>
             {% else %}
-                <a href='{% url "home" %}'>
-                    <button>back</button>
+                <a href='{% url "directory" %}'>
+                    back
                 </a>
             {% endif %}
         </div>

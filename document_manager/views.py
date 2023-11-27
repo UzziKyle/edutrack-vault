@@ -11,7 +11,7 @@ def home(request):
     context = {}
     
     try:
-        files = File.objects.filter(owner=request.user).order_by('-date_uploaded')[:5][::-1]
+        files = File.objects.filter(owner=request.user).order_by('-date')[:5][::-1]
         files = reversed(files)
         
     except:
@@ -50,7 +50,7 @@ def directory(request):
             
         else:
             context['form'] = form
-            messages.error(request, 'Folder name is required')
+            messages.error(request, 'Folder name is required.')
             return render(request, 'document_manager/directory.html', context)
 
     return render(request, 'document_manager/directory.html', context)
@@ -73,11 +73,15 @@ def edit_folder(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, f'{folder.name} has been updated successfully!')
-            return redirect('home')
+            
+            if folder.parent:
+                return redirect('folder-open', folder.parent.id)
+                
+            return redirect('directory')
         
         else:
             context['form'] = form
-            messages.error(request, 'Please correct the following errors:')
+            messages.error(request, 'Please correct the following errors.')
             return render(request, 'document_manager/edit_folder.html', context)
         
 
@@ -92,9 +96,14 @@ def delete_folder(request, id):
     
     elif request.method == 'POST':
         folder_name = folder.name
+        parent = folder.parent
         folder.delete()
         messages.success(request, f'{folder_name} has been deleted successfully.')
-        return redirect('home')
+        
+        if parent:
+            return redirect('folder-open', parent.id)
+        
+        return redirect('directory')
     
 
 @login_required   
@@ -132,7 +141,7 @@ def open_folder(request, id):
 
             else:
                 context['form'] = form
-                messages.error(request, 'Please correct the following erros.')
+                messages.error(request, 'Please correct the following errors.')
                 return render(request, 'document_manager/open_folder.html', context)
             
         if 'folderform' in request.POST:
@@ -149,7 +158,7 @@ def open_folder(request, id):
             
             else:
                 context['form'] = form
-                messages.error(request, 'Please correct the following errors:')
+                messages.error(request, 'Please correct the following errors.')
                 return render(request, 'document_manager/open_folder.html', context)
 
     return render(request, 'document_manager/open_folder.html', context)
@@ -179,7 +188,7 @@ def edit_file(request, id):
         context['form'] = EditFileForm(instance=file)
         context['file'] = file
         
-        return render(request, 'document_manager/home.html', context)
+        return render(request, 'document_manager/edit_file.html', context)
     
     elif request.method == 'POST':
         form = EditFileForm(request.POST, instance=file)
@@ -191,8 +200,8 @@ def edit_file(request, id):
         
         else:
             context['form'] = form
-            messages.error(request, 'Please correct the following errors:')
-            return render(request, 'document_manager/home.html', context)
+            messages.error(request, 'Please correct the following errors.')
+            return render(request, 'document_manager/edit_file.html', context)
         
         
 @login_required
@@ -226,13 +235,14 @@ def share_file(request, id):
     file = get_object_or_404(File, id=id)
     
     if request.method == 'GET':
-        context['form'] = ShareFileForm(instance=file)
+        context['form'] = ShareFileForm(current_user=request.user, instance=file)
         context['file'] = file
         
         return render(request, 'document_manager/share_file.html', context)
     
     elif request.method == 'POST':
-        form = ShareFileForm(request.POST, instance=file)
+        form = ShareFileForm(current_user=request.user, data=request.POST, instance=file)
+        print(file.folder.id)
         
         if form.is_valid():
             form.save()
@@ -241,6 +251,6 @@ def share_file(request, id):
                     
         else:
             context['form'] = form
-            messages.error(request, 'Please correct the following errors:')
+            messages.error(request, 'Please correct the following errors.')
             return render(request, 'document_manager/share_file.html', context)
         

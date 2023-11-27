@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content%}
-<div class='main-container'>
+<div class='home-page'>
     <h1>Welcome, {{ user.username | title }}! </h1>
     <div class="dashboards">
         <div class="dashboard">
-            <h4>Recent Upload</h4>
+            <h4>Recent Uploads</h4>
             <ul class="recents">
                 {% if files %}
                     {% for file in files %}

@@ -1,0 +1,490 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+:root {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-size: clamp(0.9em, 1vw, 1.2em);
+  --font: "Roboto", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  /* outline: auto; */
+}
+
+body {
+  font-family: var(--font);
+  line-height: 1.4;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.menu-is-open .messages {
+  left: 5px;
+  transition: left ease-in-out 250ms;
+}
+.menu-is-open .nav-container {
+  transform: translateX(20rem);
+  transition: transform ease-in-out 250ms;
+}
+.menu-is-open .main-container {
+  width: calc(100vw - 20rem);
+  transform: translateX(20rem);
+  transition: width ease-in-out 1s;
+  transition: transform ease-in-out 250ms;
+}
+.menu-is-open .main-container main {
+  padding: 64px 2rem 64px 2rem;
+  transition: padding ease-in-out 250ms;
+}
+
+.messages {
+  position: absolute;
+  left: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: left ease-in-out 125ms;
+}
+.messages h4 {
+  display: inline-block;
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: slateblue;
+  padding: 12px 50px 12px 12px;
+}
+
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: -20rem;
+  bottom: 0;
+  width: 20rem;
+  background-color: black;
+  padding-top: 6rem;
+  box-shadow: 0 0 4px gray;
+  transition: transform ease-in-out 125ms;
+  z-index: 1;
+}
+.nav-container li {
+  color: whitesmoke;
+}
+.nav-container li:hover {
+  background-color: whitesmoke;
+}
+.nav-container li a {
+  display: block;
+  padding: 16px 48px;
+  color: inherit;
+}
+.nav-container li:hover a {
+  color: black;
+}
+.nav-container .is-active {
+  background-color: whitesmoke;
+  color: black;
+}
+.nav-container #sign-out {
+  position: absolute;
+  left: 80px;
+  bottom: 16px;
+  color: whitesmoke;
+  text-align: center;
+}
+.nav-container a {
+  text-decoration: none;
+}
+@media only screen and (max-width: 1080px) {
+  .nav-container {
+    left: -100vw;
+    width: initial;
+  }
+}
+
+.main-container {
+  width: 100vw;
+  min-height: 100vh;
+  transition: width ease-in-out 125ms;
+  transition: transform ease-in-out 125ms;
+}
+.main-container main {
+  background-color: whitesmoke;
+  width: inherit;
+  min-height: inherit;
+  padding: 64px;
+  transition: padding ease-in-out 125ms;
+}
+.main-container h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.main-container h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.menu-button {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.menu-button:hover {
+  top: 6px;
+  left: 12px;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.menu-open {
+  z-index: 1;
+}
+
+.menu-open:hover {
+  outline: 2px solid black;
+}
+
+.menu-close:hover {
+  outline: 2px solid white;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button.create-folder, button.upload-file {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button.create-folder:hover, button.upload-file:hover {
+  box-shadow: 0 0 4px gray;
+}
+
+.utility {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.folders {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  justify-content: space-evenly;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.folders .folder {
+  display: flex;
+  flex-direction: column;
+}
+.folders .folder #open {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+.folders .folder i {
+  color: gray;
+}
+.folders .folder span {
+  color: black;
+}
+.folders .folder a {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.folders .folder a:hover i {
+  text-shadow: 0 0 8px black;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+}
+.folders .folder button {
+  padding: 4px 8px;
+}
+.folders .folder button-container {
+  justify-content: center;
+}
+.folders .folder button:hover {
+  cursor: pointer;
+}
+
+.files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.files .file {
+  display: flex;
+  flex-direction: column;
+  width: 128px;
+}
+.files .file #open {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+.files .file i {
+  color: gray;
+  margin-bottom: 8px;
+}
+.files .file a {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.files .file a:hover i {
+  text-shadow: 0 0 8px black;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+}
+.files .file span {
+  color: black;
+}
+.files .file button {
+  padding: 4px 8px;
+}
+.files .file button-container {
+  justify-content: center;
+}
+.files .file button:hover {
+  cursor: pointer;
+}
+
+.profile {
+  height: inherit;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 64px;
+}
+.profile .info-container {
+  width: 400px;
+}
+.profile .info-container h2 {
+  font-size: 64px;
+  border-bottom: 2px solid black;
+  margin-bottom: 8px;
+}
+.profile .info-container h4 {
+  font-size: 24px;
+  margin-bottom: 32px;
+}
+.profile .info-container .bio {
+  min-height: 48px;
+  background-color: gainsboro;
+  padding: 16px;
+}
+.profile .info-container p {
+  max-width: 100%;
+}
+.profile .picture-container {
+  display: grid;
+  place-items: center;
+  border: 2px solid black;
+  height: 320px;
+  width: 320px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px gray;
+  overflow: hidden;
+}
+.profile .picture-container img {
+  height: inherit;
+  width: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.profile #edit {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  color: black;
+}
+
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.edit-profile form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 480px;
+}
+.edit-profile form p a {
+  display: inline-block;
+  max-width: 32ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+.edit-profile form p label[for=id_profile_picture] {
+  display: block;
+  min-width: 320px;
+  margin-top: 16px;
+}
+.edit-profile form p input#profile_picture-clear_id {
+  margin-top: 8px;
+  display: inline-block;
+}
+.edit-profile form p label[for=profile_picture-clear_id] {
+  display: inline-block;
+}
+.edit-profile h3 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 96px;
+}
+.edit-profile button {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  color: black;
+}
+.edit-profile label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.edit-profile input[type=file] {
+  margin-bottom: 160px;
+}
+.edit-profile label[for=id_bio] {
+  text-align: center;
+}
+.edit-profile textarea {
+  min-width: 320px;
+  height: 96px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  margin: 0 auto 16px;
+  resize: none;
+}
+
+.form-container {
+  position: fixed;
+  top: 0;
+  left: -64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: calc(100% + 64px);
+  height: 100%;
+  padding-top: 208px;
+  padding-left: 64px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.form-container.folder-form {
+  opacity: 0;
+  z-index: -1;
+}
+.form-container.folder-form.is-open {
+  opacity: 1;
+  z-index: 1;
+}
+.form-container.file-form {
+  opacity: 0;
+  z-index: -2;
+}
+.form-container.file-form.is-open {
+  opacity: 1;
+  z-index: 1;
+}
+.form-container .form-frame {
+  background-color: whitesmoke;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 16px;
+  min-width: 320px;
+}
+.form-container .form-frame h4 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+.form-container .form-frame form p {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.form-container .form-frame form p input[type=text] {
+  padding: 4px;
+  margin-bottom: 16px;
+}
+.form-container .form-frame form input[type=submit] {
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.form-container .form-frame form input[type=submit]:hover {
+  background-color: gainsboro;
+}
+.form-container .form-frame form .button-container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+}
+.form-container .form-frame form .button-container a {
+  color: black;
+  cursor: default;
+}
+.form-container .form-frame form .button-container a:hover {
+  text-shadow: 0 0 4px gainsboro;
+}
+.form-container .form-frame form .button-container input {
+  padding: 4px 8px;
+}
+
+.home-page h1 {
+  font-size: 80px;
+  text-align: center;
+  margin-top: 96px;
+  margin-bottom: 32px;
+}
+.home-page .dashboards {
+  display: flex;
+  justify-content: space-evenly;
+  width: 768px;
+  margin: auto;
+}
+.home-page .dashboards .dashboard {
+  background-color: gainsboro;
+  height: 280px;
+  width: 280px;
+  padding: 16px 64px;
+}
+.home-page .dashboards .dashboard h4 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.home-page .dashboards .dashboard ul {
+  list-style-type: square;
+}/*# sourceMappingURL=style.css.map */

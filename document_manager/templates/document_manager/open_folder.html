@@ -1,77 +1,101 @@
 {% extends "base.html" %}
 
 {% block content%}
-<div class='main-container'>
-    {% if folder.parent %}<a id='open' href='{% url 'folder-open' folder.parent.id %}'> {{ folder.parent.name }} </a>{% else %}<a id='back' href={% url "home" %}>Main Directory</a>{% endif %}
-    <h2>{{ folder.name }}</h2>
-    <div class='utility'>
-        <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
-            <option value="" id="placeholder" disabled selected hidden>Sort</option>
-            <option id="name" value="name">AtoZ</option>
-            <option id="-name" value="-name">ZtoA</option>
-            <option id="-date_uploaded" value="-date_uploaded">Newest</option>
-            <option id="date_uploaded" value="date_uploaded">Oldest</option>
-        </select>
-    </div>
-    <button>New Folder</button>
-    <button>New File</button>
-    {% if subfolders %}
-        {% for subfolder in subfolders  %}
-        <div class='folder'>
-            <a id='open' href='{% url 'folder-open' subfolder.id %}'> {{ subfolder.name }} </a>
+{% if folder.parent %}<a id='open' href='{% url 'folder-open' folder.parent.id %}'> {{ folder.parent.name }} </a>{% else %}<a id='back' href={% url "directory" %}>Main Directory</a>{% endif %}
+<h2>{{ folder.name }}</h2>
+<div class='button-container'>
+    <button class="create-folder">New Folder</button>
+    <button class="upload-file">New File</button>
+</div>
+<div class='utility'>
+    <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
+        <option value="" id="placeholder" disabled selected hidden>Sort</option>
+        <option id="name" value="name">AtoZ</option>
+        <option id="-name" value="-name">ZtoA</option>
+        <option id="-date" value="-date">Newest</option>
+        <option id="date" value="date">Oldest</option>
+    </select>
+</div>
+{% if subfolders %}
+<h3>Folders</h3>
+<div class='folders'>
+    {% for subfolder in subfolders  %}
+    <div class='folder'>
+        <a id='open' href='{% url 'folder-open' subfolder.id %}'> 
+            <i class="fa-solid fa-folder fa-10x"></i>
+            <span>{{ subfolder.name }}</span>
+        </a>
+        <div class='button-container'>
             <a id='edit' href='{% url 'folder-edit' subfolder.id %}'><button name='edit'>Edit</button></a>
             <a id='delete' href='{% url 'folder-delete' subfolder.id %}'><button name='delete'>Delete</button></a>
         </div>
-        {% endfor %}
-    {% endif %}
-    {% if files %}
-        {% for file in files  %}
-        <div class='file'>
-            <a id='open' href=''> {{ file.name }} </a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% if files %}
+<h3>Files</h3>
+<div class='files'>
+    {% for file in files  %}
+    <div class='file'>
+        <a id='open' href='#'>
+            <i class="fa-solid fa-file fa-10x"></i>
+            <span>{{ file.name }}</span>
+        </a>
+        <div class="button-container">
             <a id='download' href='{% url 'file-download' file.id %}' download><button name='edit'>Download</button></a>
             <a id='edit' href='{% url 'file-edit' file.id %}'><button name='edit'>Edit</button></a>
             <a id='edit' href='{% url 'file-share' file.id %}'><button name='edit'>Share</button></a>
             <a id='delete' href='{% url 'file-delete' file.id %}'><button name='delete'>Delete</button></a>
         </div>
-        {% endfor %}
-    {% endif %}
+    </div>
+    {% endfor %}
 </div>
-<div class='modal-container'>
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {{ folderform.as_p }}
-        <input type="submit" name='folderform' value="Save" />
-    </form>
+{% endif %}
+<div class='form-container folder-form'>
+    <div class='form-frame'>
+        <h4>New Folder</h4>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {{ folderform.as_p }}
+            <div class='button-container'>
+                <input type="submit" name='folderform' value="Save" />
+            </div>
+        </form>
+    </div>
 </div>
-<div class='modal-container'>
-    <form method="POST" novalidate enctype='multipart/form-data'>
-        {% csrf_token %}
-        {{ fileform.as_p }}
-        <input type="submit" name='fileform' value="Save" />
-    </form>
+<div class='form-container file-form'>
+    <div class='form-frame'>
+        <h4>New File</h4>
+        <form method="POST" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ fileform.as_p }}
+            <div class='button-container'>
+                <input type="submit" name='fileform' value="Save" />
+            </div>
+        </form>
+    </div>
 </div>
-{% endblock content %}
 
-{% block js %}
 <script>
-  // for getting the sorting status to be displayed in sorting dropdown placeholder
-  function get(name) {
-    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
-      return decodeURIComponent(name[1]);
-  }
-
-  if(get('ordering'))
-  document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
-
-  // for getting url after applying ordering
-  function finalurl() {
-    var url = new URL(window.location.href)
-    var search_params = url.searchParams
-    search_params.set('ordering', document.getElementById("sort-list").value)
-    url.search = search_params.toString()
-    var new_url = url.toString()
-    return new_url
-  }
-
-</script>
-{% endblock %}
+    // for getting the sorting status to be displayed in sorting dropdown placeholder
+    function get(name) {
+      if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+        return decodeURIComponent(name[1]);
+    }
+  
+    if(get('ordering'))
+    document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
+  
+    // for getting url after applying ordering
+    function finalurl() {
+      var url = new URL(window.location.href)
+      var search_params = url.searchParams
+      search_params.set('ordering', document.getElementById("sort-list").value)
+      url.search = search_params.toString()
+      var new_url = url.toString()
+      return new_url
+    }
+  
+  </script>
+{% endblock content %}

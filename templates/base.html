@@ -1,11 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>{% if title %} {{title}} {% else %} Edutrack Vault {% endif %}</title>
+    <script src="https://kit.fontawesome.com/89a2f54080.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class='menu-is-open'>
   <p>
     {% block nav %}
       {% if request.user.is_authenticated %}
@@ -33,13 +37,10 @@
               </a>
           </nav>
       </div>
-      {% else %}
-        <a href="{% url 'login' %}">Log in</a>
-        <a href="{% url 'register' %}">Register</a>
       {% endif %}
     {% endblock nav %}
   </p>
-  <main>
+  <div class="main-container">
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -49,10 +50,11 @@
       {% endfor %}
     </ul>
     {% endif %}
+    <main>
     {% block content %}
     {% endblock content %}
-  </main>
-  {% block js %}
-  {% endblock js %}
+    </main>
+  </div>
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

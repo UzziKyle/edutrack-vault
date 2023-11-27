@@ -74,6 +74,7 @@ def edit_profile(request):
     
     if request.method == 'GET':
         context['form'] = UserProfileForm(instance=profile)
+        context['profile'] = profile
         
         return render(request, 'users/edit_profile.html', context)
     

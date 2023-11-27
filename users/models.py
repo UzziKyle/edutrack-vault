@@ -8,6 +8,7 @@ def user_directory_path(instance, filename):
 
 
 class CustomUser(AbstractUser):
+    id = models.BigAutoField(primary_key=True)
     user_type_choices = [
         ('student', 'Student'),
         ('faculty', 'Faculty'),
@@ -21,7 +22,6 @@ class CustomUser(AbstractUser):
 
 
 class UserProfile(models.Model):
-    id = models.BigAutoField(primary_key=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to=user_directory_path, blank=True)

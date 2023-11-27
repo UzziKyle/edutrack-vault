@@ -2,16 +2,26 @@
 
 {% block content%}
     <!-- profile.html -->
-<h2>{{user.username}}'s Profile</h2>
-<h4>User: {{user.user_type | title}}</h4>
+<div class="profile">
+	<div class="info-container">
+		<h2>{{user.username | title }}</h2>
+		<h4>{{user.user_type | title }}</h4>
 
-<p>Bio: {{ profile.bio }}</p>
-
-{% if profile.profile_picture %}
-	<img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
-{% else %}
-	<p>No profile picture available.</p>
-{% endif %}
-
-<a id='edit' href='{% url 'profile-edit' %}'>Edit Profile</a>
+		<div class="bio">
+			{% if profile.bio %}
+				<p>{{ profile.bio }}</p>
+			{% else %}
+				<p>Bio: </p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="picture-container">
+		{% if profile.profile_picture %}
+			<img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+		{% else %}
+			<p>No profile picture available.</p>
+		{% endif %}
+	</div>
+	<a id='edit' href='{% url 'profile-edit' %}'>Edit Profile</a>
+</div>
 {% endblock content %}

@@ -1,30 +1,36 @@
 {% extends "base.html" %}
 
 {% block content%}
-<div class='main-container'>
-    {% if folder.parent %}<a id='open' href='{% url 'folder-open' folder.parent.id %}'> {{ folder.parent.name }} </a>{% else %}<a id='back' href={% url "home" %}>Main Directory</a>{% endif %}
-    <h2>Shared to You</h2>
-    <div class='utility'>
-        <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
-            <option value="" id="placeholder" disabled selected hidden>Sort</option>
-            <option id="name" value="name">AtoZ</option>
-            <option id="-name" value="-name">ZtoA</option>
-            <option id="-date_uploaded" value="-date_uploaded">Newest</option>
-            <option id="date_uploaded" value="date_uploaded">Oldest</option>
-        </select>
+  {% if folder.parent %}<a id='open' href='{% url 'folder-open' folder.parent.id %}'> {{ folder.parent.name }} </a>{% else %}<a id='back' href={% url "directory" %}>Main Directory</a>{% endif %}
+  <h2>Shared to You</h2>
+  <div class='utility'>
+      <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
+          <option value="" id="placeholder" disabled selected hidden>Sort</option>
+          <option id="name" value="name">AtoZ</option>
+          <option id="-name" value="-name">ZtoA</option>
+          <option id="-date" value="-date">Newest</option>
+          <option id="date" value="date">Oldest</option>
+      </select>
+  </div>
+  <h3>Files</h3>
+  {% if files %}
+  <div class='files'>
+    {% for file in files  %}
+    <div class='file'>
+      <a id='open' href='#'>
+          <i class="fa-solid fa-file fa-10x"></i>
+          <span>{{ file.name }}</span>
+          <span>from</span>
+          <span>{{file.folder.name}} - {{file.owner.username | title}}</span>
+      </a>
+        <a id='download' href='{% url 'file-download' file.id %}' download><button name='edit'>Download</button></a>
     </div>
-    {% if files %}
-        {% for file in files  %}
-        <div class='file'>
-            <a id='open' href=''> {{ file.name }} </a>
-            <a id='download' href='{% url 'file-download' file.id %}' download><button name='edit'>Download</button></a>
-        </div>
-        {% endfor %}
-    {% endif %}
-</div>
-{% endblock content %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>No files shared to you.</p>
+  {% endif %}
 
-{% block js %}
 <script>
   // for getting the sorting status to be displayed in sorting dropdown placeholder
   function get(name) {
@@ -46,4 +52,4 @@
   }
 
 </script>
-{% endblock %}
+{% endblock content %}
