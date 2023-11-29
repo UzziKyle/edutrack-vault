@@ -16,4 +16,6 @@ urlpatterns = [
     path('myactions/', views.myactions, name='myactions'),
     path('notifications/', views.notifications, name='notifications'),
     path('settings/', views.settings, name='settings'),
+    path('inbox/', views.inbox, name='inbox'),
+    path('inbox/conversation', views.conversation, name='conversation'),
 ]
