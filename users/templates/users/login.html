@@ -1,15 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+  <!-- {% load static %} -->
 
-  <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <h2>Login</h2>
-      {{form.as_p}}
-      <input type="submit" value="Login" />
-      <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
-  </form>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link src="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+  
+  <div class="content">
+    <div class="border">
+      <div class="left">
+        <div class="img">
+          <img id="logo" src="{% static 'img/edutrackvault2.png' %}" alt="Logo">
+        </div>
+        <div class="text-with-bar">
+          <div>
+            <p id="title1">Managing minds</p>
+            <p id="title2">Documenting futures</p>
+          </div>
+          <div id="bar"></div></div>  
+      </div>
+      <div class="right">
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <h2 id="login"><u>Log in</u></h2>
+          
+          {% if form.errors %}
+            <p class="error">Your username and password didn't match. Please try again.</p>
+          {% endif %}
+
+          {% if form.success %}
+            <p class="success">Logged out successfully!</p>
+          {% endif %}
+  
+          <div class="form-field">
+            <img id="user_icon" src="{% static 'img/user.png' %}">
+            <input type="text" name="{{ form.username.name }}" placeholder="Username" required>
+          </div>
+          <div class="form-field">
+            <img id="key_icon" src="{% static 'img/pass.png' %}">
+            <input type="password" name="{{ form.password.name }}" placeholder="Password" required>
+          </div>
+    
+          <input id="button" type="submit" value="Log In"/>
+          <p id="register">Don't have an account? <a id="reg-link" href="{% url 'register' %}" alt="photo">Register here</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

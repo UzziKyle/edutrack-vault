@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block content%}
-    <!-- profile.html -->
 <div class="profile">
 	<div class="info-container">
 		<h2>{{user.username | title }}</h2>
 		<h4>{{user.user_type | title }}</h4>
+		<h4>ID: {{user.ID_no}}</h4>
 
 		<div class="bio">
 			{% if profile.bio %}
@@ -22,6 +22,6 @@
 			<p>No profile picture available.</p>
 		{% endif %}
 	</div>
-	<a id='edit' href='{% url 'profile-edit' %}'>Edit Profile</a>
+	<a id='edit' href='{% url "profile-edit" %}'>Edit Profile</a>
 </div>
 {% endblock content %}

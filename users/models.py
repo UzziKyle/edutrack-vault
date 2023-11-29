@@ -20,6 +20,7 @@ class CustomUser(AbstractUser):
     groups = models.ManyToManyField(Group, related_name='customuser_set', blank=True, verbose_name=_('groups'))
     user_permissions = models.ManyToManyField(Permission, related_name='customuser_set', blank=True, verbose_name=_('user permissions'))
 
+    ID_no = models.CharField(max_length=65, blank=True, null=True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
@@ -27,4 +28,4 @@ class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to=user_directory_path, blank=True)
 
     def __str__(self):
-        return f"{self.user.username}\n{self.user.user_type}"
+        return f"{self.user.username}\n{self.user.user_type}\n{self.user.ID_no}"
