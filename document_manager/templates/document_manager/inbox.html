@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content%}
+<div class="inbox-page">
+    <div class="img-container">
+        <img src='{% static "img/edutrackvault2.png" %}/' alt="App Logo">
+    </div>
+    <div class="inbox-container">
+        <h2>Inbox</h2>
+        <ul class="actions">
+            <a href="#"><li>New message</li></a>
+            <a href="#"><li>Delete message</li></a>
+        </ul>
+        <ul class="inbox">
+            <a href="{% url 'conversation' %}"><li>
+                <div class="icon-holder">
+                    <i class="fa-solid fa-users"></i> 
+                </div>
+                <div class='text-holder'>
+                    <span class="username">Admin</span>
+                    <span class="message">We already sent your transcript of records. Please...</span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </li></a>
+            <a href="#"><li>
+                <div class="icon-holder">
+                    <i class="fa-solid fa-user-tie"></i> 
+                </div>                
+                <div class='text-holder'>
+                    <span class="username">Professor</span>
+                    <span class="message">I've already forwarded your grades to the admin...</span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </li></a>
+            <a href="#"><li>
+                <div class="icon-holder">
+                    <i class="fa-solid fa-user"></i> 
+                </div>
+               <div class='text-holder'>
+                    <span class="username">Student</span>
+                    <span class="message">Nasend ko naman na sayo potekk HAHAHAHAHA...</span>
+                </div>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </li></a>
+        </ul>
+    </div>
+<script>
+    alert('INFO: You can interact with admin message.')
+</script>
+{% endblock content %}

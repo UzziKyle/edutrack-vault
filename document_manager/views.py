@@ -286,3 +286,13 @@ def notifications(request):
 @login_required
 def settings(request):
     return render(request, 'document_manager/settings.html', {'title': 'Settings'})
+
+
+@login_required
+def inbox(request): 
+    return render(request, 'document_manager/inbox.html', {'title': 'Messages'})
+
+
+@login_required
+def conversation(request):
+    return render(request, 'document_manager/conversation.html', {'title': 'Message'})

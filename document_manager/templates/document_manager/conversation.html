@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content%}
+<div class="conversation-page">
+    <div class="img-container">
+        <img src='{% static "img/edutrackvault2.png" %}/' alt="App Logo">
+    </div>
+        <div class="conversation-container">
+            <div class="icon-holder">
+                <i class="fa-solid fa-users fa-4x"></i> 
+            </div>
+            <h3>Admin</h3>
+            <ul class="message-box">
+                <li class="receiver">               
+                    <div class='text-holder'>
+                        <span class="username">You</span>
+                        <span class="message">Good day! May I request for a copy of my transcript of records?</span>
+                    </div>
+                </li>
+                <li class="sender">
+                    <div class='text-holder'>
+                        <span class="username">Admin</span>
+                        <span class="message">We have sent your transcript of records. Please check your directory. Thank you!</span>
+                    </div>
+                </li>
+            </ul>
+
+            <form class="type-bar">
+                <input type="text" name="search" placeholder="Search...">
+                <a href="#"><i class="fa-solid fa-paper-plane fa-2x"></i></a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
