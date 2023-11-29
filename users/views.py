@@ -25,7 +25,7 @@ def sign_in(request):
                 messages.success(request, f'Hi {username.title()}, welcome back!')
                 return redirect('home')
             
-        messages.error(request, f'Invalid username or password')
+        messages.error(request, f'Invalid username or password.')
         return render(request, 'users/login.html', {'form': form})
   
     

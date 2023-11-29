@@ -1,23 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form method="post" novalidate>
-        {% csrf_token %}
-        <h2>Sign Up</h2>
-        
+  {% load static %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'users/css/register.css' %}">
+  
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="container">
+      <div class="fields">
         {% for field in form %}
-        <p>
+          <div class="form-field">
+            {{field.label_tag}}
+            {{field}}
             {% if field.errors %}
-            <ul class="errorlist">
-                {% for error in field.errors %}
-                <li>{{error}}</li>
-                {% endfor %}
-            </ul>
+              <p class="error">{{ field.errors.0 }}</p>
             {% endif %}
-            {{field.label_tag}} {{field}}
-        </p>
+          </div>
         {% endfor %}
-        <input type="submit" value="Register"/>
-        <p>Already have an account? <a href="{%url 'login' %}">Login Here</a></p>
-    </form>
+        <input type="submit" value="Create Account" id="button"/>
+      </div>
+      <div class="head">
+        <h2>Sign Up</h2>
+        <p id="tagline">
+          Effortlessly manage your academic documents with EduTrack Vault. 
+          Upload, organize, and stay informed about shared files. 
+          Grant access to others, ensuring seamless collaboration on your academic materials.
+        </p>
+        <p id="login">Already have an account? <a href="{%url 'login' %}">Login Here</a></p>
+      </div>
+    </div>
+  </form>
 {% endblock content %}
