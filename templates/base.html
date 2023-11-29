@@ -31,12 +31,9 @@
                   <li><a href="#">Settings</a></li>
               </ul>
 
-              <a href="{% url 'logout' %}" id="sign-out">
-                  <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i>
-                  Sign Out
-              </a>
-          </nav>
-      </div>
+      {% else %}
+        <a href="{% url 'login' %}"></a>
+        <a href="{% url 'register' %}"></a>
       {% endif %}
     {% endblock nav %}
   </p>
