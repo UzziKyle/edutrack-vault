@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
     <title>{% if title %} {{title}} {% else %} Edutrack Vault {% endif %}</title>
     <script src="https://kit.fontawesome.com/89a2f54080.js" crossorigin="anonymous"></script>
 </head>
@@ -25,10 +26,10 @@
                   <li><a href="{% url 'home' %}">Home</a></li>
                   <li><a href="{% url 'profile' %}">Profile</a></li>
                   <li><a href="{% url 'directory' %}">My Directory</a></li>
-                  <li><a href="#">My Uploads</a></li>
-                  <li><a href="#">My Actions</a></li>
-                  <li><a href="#">Notifications</a></li>
-                  <li><a href="#">Settings</a></li>
+                  <li><a href="{% url 'uploads' %}">My Uploads</a></li>
+                  <li><a href="{% url 'myactions' %}">My Actions</a></li>
+                  <li><a href="{% url 'notifications' %}">Notifications</a></li>
+                  <li><a href="{% url 'settings' %}">Settings</a></li>
               </ul>
 
               <a href="{% url 'logout' %}" id="sign-out">

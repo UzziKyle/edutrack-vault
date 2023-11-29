@@ -16,14 +16,19 @@
   {% if files %}
   <div class='files'>
     {% for file in files  %}
-    <div class='file'>
-      <a id='open' href='#'>
+    <div class='item file'>
+      <a id='open' href='{% url 'file-download' file.id %}' target='blank'>
           <i class="fa-solid fa-file fa-10x"></i>
           <span>{{ file.name }}</span>
           <span>from</span>
           <span>{{file.folder.name}} - {{file.owner.username | title}}</span>
       </a>
-        <a id='download' href='{% url 'file-download' file.id %}' download><button name='edit'>Download</button></a>
+      <span class="open-actions"><i class="fa-solid fa-ellipsis fa-2x"></i></span>
+      <ul class="actions hidden">
+          <a id='download' href='{% url 'file-download' file.id %}' download>
+              <li>Download</li>
+          </a>
+      </ul>    
     </div>
     {% endfor %}
   </div>

@@ -62,6 +62,7 @@ def view_profile(request):
     profile = user.profile if hasattr(user, 'profile') else None
     context['user'] = user
     context['profile'] = profile
+    context['title'] = 'Profile'
 
     return render(request, 'users/profile.html', context)
 
@@ -71,6 +72,7 @@ def edit_profile(request):
     context = {}
     user = request.user
     profile = user.profile if hasattr(user, 'profile') else None
+    context['title'] = 'Edit Profile'
     
     if request.method == 'GET':
         context['form'] = UserProfileForm(instance=profile)

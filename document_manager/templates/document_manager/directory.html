@@ -2,6 +2,9 @@
 
 {% block content%}
     <h2>My Directory</h2>
+    <form class="search-bar">
+        <input type="text" name="search" placeholder="Search...">
+    </form>
     <div class='button-container'>
         <button class="create-folder">New Folder</button>
     </div>
@@ -18,15 +21,19 @@
     <div class='folders'>
         {% if folders %}
             {% for folder in folders  %}
-            <div class='folder'>
+            <div class='item folder'>
                 <a id='open' href='{% url 'folder-open' folder.id %}'>
                     <i class="fa-solid fa-folder fa-10x"></i>
                     <span>{{ folder.name }}</span>
                 </a>
-                <div class='button-container'>
-                    <a id='edit' href='{% url 'folder-edit' folder.id %}'><button name='edit'>Edit</button></a>
-                    <a id='delete' href='{% url 'folder-delete' folder.id %}'><button name='delete'>Delete</button></a>
-                </div>
+                <span class="open-actions"><i class="fa-solid fa-ellipsis fa-2x"></i></span>
+                <ul class="actions hidden">
+                    <a id='edit' href='{% url 'folder-edit' folder.id %}'>
+                        <li>Edit</li>
+                    <a id='delete' href='{% url 'folder-delete' folder.id %}'>
+                        <li>Delete</li>
+                    </a>
+                </ul>
             </div>
             {% endfor %}
         {% endif %}
@@ -37,7 +44,7 @@
             </a>
         </div>
     </div>
-    <div class='form-container folder-form'>
+    <div class='form-container modal folder-form'>
         <div class='form-frame'>
             <h4>New Folder</h4>
             <form method="POST" novalidate>

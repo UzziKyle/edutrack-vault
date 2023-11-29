@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content%}
+<div class="myactions-page">
+    <div class="img-container">
+        <img src='{% static "img/edutrackvault2.png" %}/' alt="App Logo">
+    </div>
+    <h2>Recent Activities</h2>
+    <div class="dashboard">
+        <h4>Actions</h4>
+        <ul class="updates">
+            <li>You deleted "My Folder".</li>
+            <li>You shared "activity#1" to @anotheruser.</li>
+            <li>You uploaded "activity#1".</li>
+            <li>You renamed "meowmeow" into "My Folder".</li>
+            <li>You uploaded "meowmeow".</li>
+        </ul>
+    </div>
+</div>
+<script>
+    alert('INFO: This page is static.')
+</script>
+{% endblock content %}

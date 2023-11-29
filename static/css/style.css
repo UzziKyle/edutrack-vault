@@ -1,9 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@100;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;400;700&family=Roboto:wght@100;400;700&display=swap");
 :root {
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-size: clamp(0.9em, 1vw, 1.2em);
   --font: "Roboto", sans-serif;
+  --title: "Noto Serif", serif;
 }
 
 *,
@@ -12,7 +14,6 @@
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  /* outline: auto; */
 }
 
 body {
@@ -21,6 +22,27 @@ body {
   background-color: whitesmoke;
   overflow-x: hidden;
   scrollbar-gutter: stable;
+  color: #333;
+}
+
+input {
+  padding: 8px;
+  border: 2px solid #ccc;
+  outline: none;
+  transition: border ease-in-out 125ms;
+}
+input[type=text] {
+  padding: 12px 20px;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+input[type=file]:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+input:focus {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
 }
 
 .menu-is-open .messages {
@@ -54,8 +76,12 @@ body {
   display: inline-block;
   width: -moz-fit-content;
   width: fit-content;
-  background-color: slateblue;
+  background-color: #990100;
+  color: #F6F6F6;
+  font-weight: bold;
   padding: 12px 50px 12px 12px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0px 0px 4px #333;
 }
 
 .nav-container {
@@ -64,17 +90,20 @@ body {
   left: -20rem;
   bottom: 0;
   width: 20rem;
-  background-color: black;
+  background-color: #333333;
   padding-top: 6rem;
-  box-shadow: 0 0 4px gray;
+  box-shadow: 0 0 4px #E8E8E8;
   transition: transform ease-in-out 125ms;
   z-index: 1;
 }
+.nav-container .menu-button {
+  color: #F6F6F6;
+}
 .nav-container li {
-  color: whitesmoke;
+  color: #F6F6F6;
 }
 .nav-container li:hover {
-  background-color: whitesmoke;
+  background-color: #F6F6F6;
 }
 .nav-container li a {
   display: block;
@@ -82,17 +111,17 @@ body {
   color: inherit;
 }
 .nav-container li:hover a {
-  color: black;
+  color: #333;
 }
 .nav-container .is-active {
-  background-color: whitesmoke;
-  color: black;
+  background-color: #F6F6F6;
+  color: #333;
 }
 .nav-container #sign-out {
   position: absolute;
   left: 80px;
   bottom: 16px;
-  color: whitesmoke;
+  color: #F6F6F6;
   text-align: center;
 }
 .nav-container a {
@@ -112,11 +141,24 @@ body {
   transition: transform ease-in-out 125ms;
 }
 .main-container main {
-  background-color: whitesmoke;
+  background-color: #F6F6F6;
   width: inherit;
   min-height: inherit;
   padding: 64px;
   transition: padding ease-in-out 125ms;
+}
+.main-container main .search-bar input[type=text] {
+  width: 45%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  border-radius: 8px;
+  transition: 0.5s;
+  outline: none;
+}
+.main-container main .search-bar input[type=text]:focus {
+  border: 3px solid #333;
 }
 .main-container h2 {
   font-size: 32px;
@@ -124,7 +166,7 @@ body {
 }
 .main-container h3 {
   font-size: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .menu-button {
@@ -145,11 +187,11 @@ body {
 }
 
 .menu-open:hover {
-  outline: 2px solid black;
+  outline: 3px solid #333;
 }
 
 .menu-close:hover {
-  outline: 2px solid white;
+  outline: 3px solid #F6F6F6;
 }
 
 .button-container {
@@ -158,13 +200,20 @@ body {
   gap: 8px;
 }
 
+button {
+  min-width: 64px;
+}
 button.create-folder, button.upload-file {
-  padding: 8px 16px;
+  padding: 8px;
+  color: #333;
+  border: 3px solid #ccc;
   border-radius: 8px;
   cursor: pointer;
+  transition: border ease-in-out 125ms;
 }
 button.create-folder:hover, button.upload-file:hover {
-  box-shadow: 0 0 4px gray;
+  border: 3px solid #333;
+  transition: border ease-in-out 250ms;
 }
 
 .utility {
@@ -175,16 +224,18 @@ button.create-folder:hover, button.upload-file:hover {
 .folders {
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
-  justify-content: space-evenly;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 100%;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 .folders .folder {
+  position: relative;
+  aspect-ratio: 1/1;
+  width: 20%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .folders .folder #open {
   display: flex;
@@ -192,73 +243,140 @@ button.create-folder:hover, button.upload-file:hover {
   text-decoration: none;
   margin-bottom: 8px;
 }
-.folders .folder i {
-  color: gray;
-}
-.folders .folder span {
-  color: black;
+.folders .folder i.fa-solid.fa-folder {
+  color: #E8E8E8;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #333;
 }
 .folders .folder a {
   width: -moz-fit-content;
   width: fit-content;
 }
 .folders .folder a:hover i {
-  text-shadow: 0 0 8px black;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
+  text-shadow: 0 0 4px #333;
 }
-.folders .folder button {
-  padding: 4px 8px;
+.folders .folder a span {
+  color: #333;
 }
-.folders .folder button-container {
-  justify-content: center;
+.folders .folder:hover .open-actions {
+  display: block;
 }
-.folders .folder button:hover {
+.folders .folder .open-actions {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 4px;
   cursor: pointer;
+}
+.folders .folder .open-actions.is-clicked {
+  display: block;
+}
+.folders .folder .actions {
+  position: absolute;
+  top: 24px;
+  right: 16px;
+  background-color: rgba(51, 51, 51, 0.9);
+  width: 96px;
+  border-radius: 4px;
+  padding: 8px 0;
+  overflow: hidden;
+  transition: height ease-in-out 125ms, display ease-in-out 125ms;
+}
+.folders .folder .actions.hidden {
+  display: none;
+  height: 0;
+  transition: height ease-in-out 125ms, display ease-in-out 125ms;
+}
+.folders .folder .actions a {
+  display: block;
+  width: 100%;
+  color: #F6F6F6;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color ease-in-out 125ms, background-color ease-in-out 125ms;
+}
+.folders .folder .actions a:hover {
+  color: #333;
+  background-color: #E8E8E8;
+  transition: color ease-in-out 100ms, background-color ease-in-out 100ms;
 }
 
 .files {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
+  width: 100%;
   text-align: center;
-  margin-bottom: 32px;
 }
 .files .file {
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 128px;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  aspect-ratio: 1/1;
+  padding-top: 16px;
 }
 .files .file #open {
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
-.files .file i {
-  color: gray;
-  margin-bottom: 8px;
-}
-.files .file a {
-  width: -moz-fit-content;
-  width: fit-content;
-}
-.files .file a:hover i {
-  text-shadow: 0 0 8px black;
+.files .file #open i.fa-solid.fa-file {
+  color: #E8E8E8;
+  margin-bottom: 16px;
   -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-color: #333;
 }
-.files .file span {
-  color: black;
+.files .file #open:hover i {
+  text-shadow: 0 0 4px #333;
 }
-.files .file button {
-  padding: 4px 8px;
+.files .file #open span {
+  color: #333;
 }
-.files .file button-container {
-  justify-content: center;
+.files .file:hover .open-actions {
+  display: block;
 }
-.files .file button:hover {
+.files .file .open-actions {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 4px;
   cursor: pointer;
+}
+.files .file .open-actions.is-clicked {
+  display: block;
+}
+.files .file .actions {
+  position: absolute;
+  top: 24px;
+  right: 16px;
+  background-color: rgba(51, 51, 51, 0.9);
+  width: 128px;
+  border-radius: 4px;
+  padding: 8px 0;
+  overflow: hidden;
+  transition: height ease-in-out 125ms, display ease-in-out 125ms;
+}
+.files .file .actions.hidden {
+  display: none;
+  height: 0;
+  transition: height ease-in-out 125ms, display ease-in-out 125ms;
+}
+.files .file .actions a {
+  display: block;
+  width: 100%;
+  color: #F6F6F6;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color ease-in-out 125ms, background-color ease-in-out 125ms;
+}
+.files .file .actions a:hover {
+  color: #333;
+  background-color: #E8E8E8;
+  transition: color ease-in-out 100ms, background-color ease-in-out 100ms;
 }
 
 .profile {
@@ -277,7 +395,7 @@ button.create-folder:hover, button.upload-file:hover {
 }
 .profile .info-container h2 {
   font-size: 64px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #333333;
   margin-bottom: 8px;
 }
 .profile .info-container h4 {
@@ -286,8 +404,10 @@ button.create-folder:hover, button.upload-file:hover {
 }
 .profile .info-container .bio {
   min-height: 48px;
-  background-color: gainsboro;
+  background-color: #F6F6F6;
   padding: 16px;
+  border: 3px solid #333;
+  box-shadow: 8px 8px #990100;
 }
 .profile .info-container p {
   max-width: 100%;
@@ -295,11 +415,12 @@ button.create-folder:hover, button.upload-file:hover {
 .profile .picture-container {
   display: grid;
   place-items: center;
-  border: 2px solid black;
+  border: 3px solid #333;
   height: 320px;
   width: 320px;
   border-radius: 50%;
-  box-shadow: 0 0 4px gray;
+  box-shadow: 0 0 8px #E8E8E8;
+  background-color: #E8E8E8;
   overflow: hidden;
 }
 .profile .picture-container img {
@@ -371,6 +492,10 @@ button.create-folder:hover, button.upload-file:hover {
 .edit-profile input[type=file] {
   margin-bottom: 160px;
 }
+.edit-profile input[type=file]:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
 .edit-profile label[for=id_bio] {
   text-align: center;
 }
@@ -384,10 +509,16 @@ button.create-folder:hover, button.upload-file:hover {
   background-color: #f8f8f8;
   font-size: 16px;
   margin: 0 auto 16px;
+  outline: none;
   resize: none;
+  transition: border ease-in-out 125ms;
+}
+.edit-profile textarea:focus {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
 }
 
-.form-container {
+.form-container.modal {
   position: fixed;
   top: 0;
   left: -64px;
@@ -401,70 +532,318 @@ button.create-folder:hover, button.upload-file:hover {
   padding-left: 64px;
   background-color: rgba(255, 255, 255, 0.3);
 }
-.form-container.folder-form {
+.form-container.modal.folder-form {
   opacity: 0;
   z-index: -1;
 }
-.form-container.folder-form.is-open {
+.form-container.modal.folder-form.is-open {
   opacity: 1;
   z-index: 1;
 }
-.form-container.file-form {
+.form-container.modal.file-form {
   opacity: 0;
   z-index: -2;
 }
-.form-container.file-form.is-open {
+.form-container.modal.file-form.is-open {
   opacity: 1;
   z-index: 1;
 }
-.form-container .form-frame {
+.form-container.modal .form-frame {
   background-color: whitesmoke;
   border: 1px solid black;
   border-radius: 4px;
   padding: 16px;
   min-width: 320px;
 }
-.form-container .form-frame h4 {
+.form-container.modal .form-frame h4 {
   text-align: center;
   font-size: 24px;
   margin-bottom: 16px;
 }
-.form-container .form-frame form p {
+.form-container.modal .form-frame form p {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 8px;
 }
-.form-container .form-frame form p input[type=text] {
+.form-container.modal .form-frame form p input[type=text] {
   padding: 4px;
   margin-bottom: 16px;
 }
-.form-container .form-frame form input[type=submit] {
+.form-container.modal .form-frame form input[type=submit] {
   padding: 4px 8px;
   border: 1px solid black;
   border-radius: 4px;
 }
-.form-container .form-frame form input[type=submit]:hover {
+.form-container.modal .form-frame form input[type=submit]:hover {
   background-color: gainsboro;
 }
-.form-container .form-frame form .button-container {
+.form-container.modal .form-frame form .button-container {
   justify-content: center;
   align-items: center;
   margin-top: 16px;
 }
-.form-container .form-frame form .button-container a {
+.form-container.modal .form-frame form .button-container a {
   color: black;
   cursor: default;
 }
-.form-container .form-frame form .button-container a:hover {
+.form-container.modal .form-frame form .button-container a:hover {
   text-shadow: 0 0 4px gainsboro;
 }
-.form-container .form-frame form .button-container input {
+.form-container.modal .form-frame form .button-container input {
   padding: 4px 8px;
 }
 
+.form-container.edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80%;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.form-container.edit h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+.form-container.edit form {
+  padding: 8px 16px;
+}
+.form-container.edit form p {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-container.edit form p label {
+  font-size: 20px;
+}
+.form-container.edit form p input[type=text] {
+  width: 240px;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+.form-container.edit form .button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+.form-container.edit form .button-container input {
+  width: 64px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.form-container.edit form .button-container input:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+.form-container.edit form .button-container a {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  line-height: 2.5;
+  font-size: 16px;
+  display: block;
+  width: 64px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.form-container.edit form .button-container a:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+
+.form-container.delete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80%;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.form-container.delete h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.form-container.delete form {
+  padding: 8px 16px;
+}
+.form-container.delete form p {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.form-container.delete form .button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+.form-container.delete form .button-container button {
+  width: 64px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.form-container.delete form .button-container button[type=submit]:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+.form-container.delete form .button-container a {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  line-height: 2.5;
+  font-size: 16px;
+  display: block;
+  width: 64px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.form-container.delete form .button-container a:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+
+.form-container.share {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80%;
+  width: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.form-container.share h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.form-container.share form {
+  padding: 8px 16px;
+}
+.form-container.share form p {
+  display: flex;
+  gap: 56px;
+  font-weight: bold;
+}
+.form-container.share form p label {
+  text-align: center;
+}
+.form-container.share form #id_sharing_to {
+  margin-top: 15px;
+  background-color: #E8E8E8;
+  display: block;
+  height: 240px;
+  aspect-ratio: 1/1;
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 16px;
+}
+.form-container.share form #id_sharing_to div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px;
+  border-bottom: 1px solid #F6F6F6;
+}
+.form-container.share form #id_sharing_to div label {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
+.form-container.share form #id_sharing_to div input[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #E8E8E8;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+.form-container.share form #id_sharing_to div input[type=checkbox]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 80ms transform ease-in-out;
+  box-shadow: inset 1em 1em #990100;
+}
+.form-container.share form #id_sharing_to div input[type=checkbox]:checked::before {
+  transform: scale(1);
+}
+.form-container.share form .button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+.form-container.share form .button-container input {
+  width: 64px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.form-container.share form .button-container input[type=submit]:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+.form-container.share form .button-container a {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  line-height: 2.5;
+  font-size: 16px;
+  display: block;
+  width: 64px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+.form-container.share form .button-container a:hover {
+  border: 2px solid #333;
+  transition: border ease-in-out 250ms;
+}
+
+.home-page .img-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: lightgrey;
+  border-bottom: 2px solid #333;
+  border-left: 2px solid #333;
+  border-radius: 0 0 0 8px;
+  padding: 8px 0;
+  box-shadow: 0px 4px #990100, 0 0 4px rgb(51, 51, 51);
+}
+.home-page .img-container img {
+  height: 64px;
+}
 .home-page h1 {
-  font-size: 80px;
+  font-family: --title;
+  font-weight: bold;
+  font-size: 96px;
   text-align: center;
   margin-top: 96px;
   margin-bottom: 32px;
@@ -476,15 +855,194 @@ button.create-folder:hover, button.upload-file:hover {
   margin: auto;
 }
 .home-page .dashboards .dashboard {
-  background-color: gainsboro;
+  background-color: #E8E8E8;
   height: 280px;
   width: 280px;
   padding: 16px 64px;
+  border: 2px solid #333;
+  border-radius: 16px;
+  box-shadow: 0px 4px #990100;
 }
 .home-page .dashboards .dashboard h4 {
+  font-size: 20px;
+  font-weight: bold;
   text-align: center;
   margin-bottom: 16px;
 }
 .home-page .dashboards .dashboard ul {
   list-style-type: square;
+}
+.home-page .dashboards .dashboard ul li {
+  margin-bottom: 8px;
+}
+
+.notifications-page .img-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: lightgrey;
+  border-bottom: 2px solid #333;
+  border-left: 2px solid #333;
+  border-radius: 0 0 0 8px;
+  padding: 8px 0;
+  box-shadow: 0px 4px #990100, 0 0 4px rgb(51, 51, 51);
+}
+.notifications-page .img-container img {
+  height: 64px;
+}
+.notifications-page h2 {
+  font-family: --title;
+  font-weight: bold;
+  font-size: 64px;
+  text-align: center;
+  margin-top: 96px;
+  margin-bottom: 64px;
+}
+.notifications-page .dashboards {
+  display: flex;
+  justify-content: space-evenly;
+  width: 768px;
+  margin: auto;
+}
+.notifications-page .dashboards .dashboard {
+  background-color: #E8E8E8;
+  height: 280px;
+  width: 280px;
+  padding: 16px 64px;
+  border: 2px solid #333;
+  border-radius: 16px;
+  box-shadow: 0px 4px #990100;
+}
+.notifications-page .dashboards .dashboard h4 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.notifications-page .dashboards .dashboard ul {
+  list-style-type: square;
+}
+.notifications-page .dashboards .dashboard ul li {
+  margin-bottom: 8px;
+}
+
+.myactions-page .img-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: lightgrey;
+  border-bottom: 2px solid #333;
+  border-left: 2px solid #333;
+  border-radius: 0 0 0 8px;
+  padding: 8px 0;
+  box-shadow: 0px 4px #990100, 0 0 4px rgb(51, 51, 51);
+}
+.myactions-page .img-container img {
+  height: 64px;
+}
+.myactions-page h2 {
+  font-family: --title;
+  font-weight: bold;
+  font-size: 64px;
+  text-align: center;
+  margin-top: 96px;
+  margin-bottom: 64px;
+}
+.myactions-page .dashboard {
+  background-color: #E8E8E8;
+  height: 280px;
+  width: 320px;
+  padding: 16px 32px;
+  border: 2px solid #333;
+  border-radius: 16px;
+  box-shadow: 0px 4px #990100;
+  margin: 0 auto;
+}
+.myactions-page .dashboard h4 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.myactions-page .dashboard ul {
+  list-style-type: square;
+}
+.myactions-page .dashboard ul li {
+  margin-bottom: 8px;
+}
+
+.settings-page .img-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: lightgrey;
+  border-bottom: 2px solid #333;
+  border-left: 2px solid #333;
+  border-radius: 0 0 0 8px;
+  padding: 8px 0;
+  box-shadow: 0px 4px #990100, 0 0 4px rgb(51, 51, 51);
+}
+.settings-page .img-container img {
+  height: 64px;
+}
+.settings-page h2 {
+  font-family: --title;
+  font-weight: bold;
+  font-size: 64px;
+  text-align: center;
+  margin-top: 96px;
+  margin-bottom: 64px;
+}
+.settings-page .settings-container {
+  background-color: #E8E8E8;
+  width: 320px;
+  padding: 16px 32px;
+  border: 2px solid #333;
+  border-radius: 16px;
+  box-shadow: 0px 4px #990100;
+  margin: 0 auto;
+}
+.settings-page .settings-container h4 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.settings-page .settings-container .settings {
+  list-style-type: none;
+}
+.settings-page .settings-container .settings a {
+  text-decoration: none;
+}
+.settings-page .settings-container .settings li {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  line-height: 2;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+.settings-page .settings-container .settings li i {
+  color: #990100;
+}
+.settings-page .settings-container .settings li span {
+  font-weight: bold;
+  color: #333;
+}
+.settings-page .settings-container .settings li:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+.settings-page .settings-container .settings li:hover i {
+  color: #F6F6F6;
+}
+.settings-page .settings-container .settings li:hover span {
+  color: #F6F6F6;
 }/*# sourceMappingURL=style.css.map */

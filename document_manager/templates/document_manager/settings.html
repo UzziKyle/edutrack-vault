@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content%}
+<div class="settings-page">
+    <div class="img-container">
+        <img src='{% static "img/edutrackvault2.png" %}/' alt="App Logo">
+    </div>
+    <h2>Settings</h2>
+    <div class="settings-container">
+        <ul class="settings">
+            <a href="{% url 'profile-edit' %}"><li><i class="fa-solid fa-address-card fa-2x"></i><span>Profile</span><i class="fa-solid fa-angle-right fa-2x"></i></li></a>
+            <li><i class="fa-solid fa-language fa-2x"></i><span>Languages</span><i class="fa-solid fa-angle-right fa-2x"></i></li>
+            <li><i class="fa-solid fa-message fa-2x"></i><span>Feedbacks</span><i class="fa-solid fa-angle-right fa-2x"></i></li>
+        </ul>
+    </div>
+</div>     
+</div>
+{% endblock content %}

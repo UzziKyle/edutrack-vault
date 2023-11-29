@@ -12,4 +12,8 @@ urlpatterns = [
     path('file/delete/<int:id>/', views.delete_file, name='file-delete'),
     path('file/download/<int:id>', views.download_file, name='file-download'),
     path('file/share/<int:id>', views.share_file, name='file-share'),
+    path('uploads/', views.uploads, name='uploads'),
+    path('myactions/', views.myactions, name='myactions'),
+    path('notifications/', views.notifications, name='notifications'),
+    path('settings/', views.settings, name='settings'),
 ]

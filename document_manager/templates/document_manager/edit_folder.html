@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class='modal-container'>
+<div class='form-container edit'>
+	<h2>Edit Folder</h2>
 <form method="POST" novalidate>
 	{% csrf_token %}
 	{{ form.as_p }}
 	<div class='button-container'>
 		<input type="submit" value="Save" />
 		{% if folder.parent %}
+		{{folder.parent}}
 			<a href='{% url "folder-open" folder.parent.id %}'>
 				back
 			</a>

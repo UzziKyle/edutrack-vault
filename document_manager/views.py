@@ -21,6 +21,7 @@ def home(request):
     
     context['files'] = files
     context['user'] = user
+    context['title'] = 'Home'
     
     return render(request, 'document_manager/home.html', context)
     
@@ -64,6 +65,7 @@ def edit_folder(request, id):
     if request.method == 'GET':
         context['form'] = CreateFolderForm(instance=folder)
         context['folder'] = folder
+        context['title'] = f'Edit {folder.name}'
         
         return render(request, 'document_manager/edit_folder.html', context)
     
@@ -90,6 +92,7 @@ def delete_folder(request, id):
     context = {}
     folder = get_object_or_404(Folder, pk=id)
     context['folder'] = folder
+    context['title'] = f'Delete {folder.name}'
     
     if request.method == 'GET':        
         return render(request, 'document_manager/delete_folder.html', context)
@@ -123,6 +126,7 @@ def open_folder(request, id):
     context['files'] = files
     context['fileform'] = UploadFileForm()
     context['folderform'] = CreateFolderForm()
+    context['title'] = folder.name
     
     if request.method == 'GET':        
         return render(request, 'document_manager/open_folder.html', context)
@@ -153,7 +157,7 @@ def open_folder(request, id):
                 subfolder.owner = request.user
                 subfolder.parent = folder
                 subfolder.save()
-                messages.success(request, f'{subfolder.name} has been updated successfully!')
+                messages.success(request, f'{subfolder.name} was created successfully.')
                 redirect(f'folder/open/{subfolder.parent.id}/')
             
             else:
@@ -174,6 +178,7 @@ def open_shared_to_you(request):
         files = files.order_by(ordering)
         
     context['files'] = files
+    context['title'] = 'Shared to You'
 
     if request.method == 'GET':        
         return render(request, 'document_manager/open_shared_files.html', context)
@@ -209,6 +214,7 @@ def delete_file(request, id):
     context = {}
     file = get_object_or_404(File, pk=id)
     context['file'] = file    
+    context['title'] = f'Delete {file.name}'
     
     if request.method == 'GET':        
         return render(request, 'document_manager/delete_file.html', context)
@@ -233,6 +239,7 @@ def download_file(request, id):
 def share_file(request, id):
     context = {}
     file = get_object_or_404(File, id=id)
+    context['title'] = f'Share {file.name}'
     
     if request.method == 'GET':
         context['form'] = ShareFileForm(current_user=request.user, instance=file)
@@ -254,3 +261,28 @@ def share_file(request, id):
             messages.error(request, 'Please correct the following errors.')
             return render(request, 'document_manager/share_file.html', context)
         
+        
+@login_required
+def uploads(request):
+    context = {}
+    files = File.objects.filter(owner=request.user)
+    
+    context['files'] = files
+    context['title'] = 'My Uploads'
+    
+    return render(request, 'document_manager/uploads.html', context)
+
+
+@login_required
+def myactions(request):
+    return render(request, 'document_manager/myactions.html', {'title': 'My Actions'})
+
+
+@login_required
+def notifications(request):
+    return render(request, 'document_manager/notifications.html', {'title': 'Notifications'})
+
+
+@login_required
+def settings(request):
+    return render(request, 'document_manager/settings.html', {'title': 'Settings'})

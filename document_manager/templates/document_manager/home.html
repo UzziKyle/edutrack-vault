@@ -1,7 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content%}
 <div class='home-page'>
+    <div class="img-container">
+        <img src='{% static "img/edutrackvault2.png" %}/' alt="App Logo">
+    </div>
     <h1>Welcome, {{ user.username | title }}! </h1>
     <div class="dashboards">
         <div class="dashboard">
@@ -22,27 +26,3 @@
     </div>
 </div>
 {% endblock content %}
-
-{% block js %}
-<script>
-  // for getting the sorting status to be displayed in sorting dropdown placeholder
-  function get(name) {
-    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
-      return decodeURIComponent(name[1]);
-  }
-
-  if(get('ordering'))
-  document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
-
-  // for getting url after applying ordering
-  function finalurl() {
-    var url = new URL(window.location.href)
-    var search_params = url.searchParams
-    search_params.set('ordering', document.getElementById("sort-list").value)
-    url.search = search_params.toString()
-    var new_url = url.toString()
-    return new_url
-  }
-
-</script>
-{% endblock %}

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
 {% block content%}
-{% if folder.parent %}<a id='open' href='{% url 'folder-open' folder.parent.id %}'> {{ folder.parent.name }} </a>{% else %}<a id='back' href={% url "directory" %}>Main Directory</a>{% endif %}
-<h2>{{ folder.name }}</h2>
-<div class='button-container'>
-    <button class="create-folder">New Folder</button>
-    <button class="upload-file">New File</button>
-</div>
+<h2>My Uploads</h2>
+<form class="search-bar">
+    <input type="text" name="search" placeholder="Search...">
+</form>
 <div class='utility'>
     <select name="sort" id="sort-list" onchange="location = finalurl()" style="margin-left: auto;">
         <option value="" id="placeholder" disabled selected hidden>Sort</option>
@@ -16,34 +14,12 @@
         <option id="date" value="date">Oldest</option>
     </select>
 </div>
-{% if subfolders %}
-<h3>Folders</h3>
-<div class='folders'>
-    {% for subfolder in subfolders  %}
-    <div class='item folder'>
-        <a id='open' href='{% url 'folder-open' subfolder.id %}'> 
-            <i class="fa-solid fa-folder fa-10x"></i>
-            <span>{{ subfolder.name }}</span>
-        </a>
-        <span class="open-actions"><i class="fa-solid fa-ellipsis fa-2x"></i></span>
-        <ul class="actions hidden">
-            <a id='edit' href='{% url 'folder-edit' folder.id %}'>
-                <li>Edit</li>
-            <a id='delete' href='{% url 'folder-delete' folder.id %}'>
-                <li>Delete</li>
-            </a>
-        </ul>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-{% if files %}
-<h3>Files</h3>
 <div class='files'>
     {% for file in files  %}
     <div class='item file'>
         <a id='open' href='{% url 'file-download' file.id %}' target='blank'>
             <i class="fa-solid fa-file fa-10x"></i>
+            <span>{{ file.folder.name }} /</span>
             <span>{{ file.name }}</span>
         </a>
         <span class="open-actions"><i class="fa-solid fa-ellipsis fa-2x"></i></span>
@@ -64,7 +40,6 @@
     </div>
     {% endfor %}
 </div>
-{% endif %}
 <div class='form-container modal folder-form'>
     <div class='form-frame'>
         <h4>New Folder</h4>
