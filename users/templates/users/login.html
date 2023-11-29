@@ -6,13 +6,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link src="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{% static 'users/css/login.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
   
   <div class="content">
     <div class="border">
       <div class="left">
         <div class="img">
-          <img id="logo" src="{% static 'users/images/edutrackvault2.png' %}" alt="Logo">
+          <img id="logo" src="{% static 'images/edutrackvault2.png' %}" alt="Logo">
         </div>
         <div class="text-with-bar">
           <div>
@@ -35,11 +35,11 @@
           {% endif %}
   
           <div class="form-field">
-            <img id="user_icon" src="{% static 'users/images/user.png' %}">
+            <img id="user_icon" src="{% static 'images/user.png' %}">
             <input type="text" name="{{ form.username.name }}" placeholder="Username" required>
           </div>
           <div class="form-field">
-            <img id="key_icon" src="{% static 'users/images/pass.png' %}">
+            <img id="key_icon" src="{% static 'images/pass.png' %}">
             <input type="password" name="{{ form.password.name }}" placeholder="Password" required>
           </div>
     
