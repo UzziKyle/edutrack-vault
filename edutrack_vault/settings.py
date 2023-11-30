@@ -36,7 +36,7 @@ ALLOWED_HOSTS = ['web-production-a37c.up.railway.app', '127.0.0.1']
 
 ## For example, for a site URL is at 'web-production-3640.up.railway.app'
 ## (replace the string below with your own site URL):
-CSRF_TRUSTED_ORIGINS = ['web-production-a37c.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-a37c.up.railway.app']
 
 # During development/for this tutorial you can instead set just the base URL
 # CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
