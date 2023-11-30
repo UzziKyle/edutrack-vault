@@ -1,1 +1,1 @@
-web: gunicorn 'edutrack_vault.wsgi'
+web: python manage.py migrate && python manage.py collectstatic --no-input && gunicorn edutrack_vault.wsgi
