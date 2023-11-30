@@ -69,6 +69,7 @@ body:has(.main-container) input:focus {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  z-index: 5;
   transition: left ease-in-out 125ms;
 }
 .messages h4 {
