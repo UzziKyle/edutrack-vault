@@ -1,0 +1,1 @@
+web: gunicorn 'edutrack_vault.wsgi'
